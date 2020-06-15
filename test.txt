@@ -1,0 +1,32 @@
+#include "stdafx.h"
+#include "LuaBasic.h"
+#include <lua.hpp>
+#include <lauxlib.h>
+#include <lualib.h>
+
+int LuaBasic_InitLuaFuncs(lua_State *L)
+{
+	lua_register(L, "LuaBasic_execfile", LuaBasic_execfile);
+
+	
+	return 0;
+}
+int LuaBasic_execfile(lua_State *L)
+{
+
+	size_t len;
+	const char* cstr = lua_tolstring(L, -1, &len);
+	if (len>0)
+	{
+		int status = luaL_loadfile((lua_State *)L, cstr);
+
+		if ( status==0 ) {
+			// execute Lua program
+			status = lua_pcall((lua_State *)L, 0, LUA_MULTRET, 0);
+		}
+		lua_pop((lua_State *)L, 1); // remove error message
+		return status;
+	}
+	return -1;
+	
+}
