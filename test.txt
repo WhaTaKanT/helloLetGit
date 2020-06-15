@@ -2,7 +2,7 @@
 #include "LuaBasic.h"
 #include <lua.hpp>
 #include <lauxlib.h>
-#include <lualib.h>
+#include <zzzlib.h>
 
 int LuaBasic_InitLuaFuncs(lua_State *L)
 {
